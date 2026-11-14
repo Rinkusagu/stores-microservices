@@ -1,0 +1,87 @@
+catalog:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/example/catalog
+    tag: latest
+    pullPolicy: IfNotPresent
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 50
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+
+storefront:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/example/storefront
+    tag: latest
+    pullPolicy: IfNotPresent
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 50
+  ingress:
+    enabled: true
+    className: nginx
+    host: shop.local
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+
+orders:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/example/orders
+    tag: latest
+    pullPolicy: IfNotPresent
+  autoscaling:
+    enabled: false
+  resources:
+    requests:
+      cpu: 20m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+worker:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/example/worker
+    tag: latest
+    pullPolicy: IfNotPresent
+  autoscaling:
+    enabled: false
+  resources:
+    requests:
+      cpu: 20m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+redis:
+  replicaCount: 1
+  image:
+    repository: redis
+    tag: 7-alpine
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 20m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi

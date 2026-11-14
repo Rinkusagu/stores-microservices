@@ -1,0 +1,12 @@
+---
+description: Plans and progress must live only under this project directory via PLAN.md
+alwaysApply: true
+---
+
+# Planning & progress (this repo only)
+
+- Use `PLAN.md` as the index for all plans.
+- Store each plan as `plans/<kebab-name>.md`.
+- Maintain progress **only** in this project directory (`PLAN.md`, `plans/*`). Do not put plans or progress in agent stores, chat-only notes, or paths outside the repo.
+- When creating a plan: add the file under `plans/`, link it from `PLAN.md`, use status (`planned` / `in-progress` / `blocked` / `done`) and checkboxes.
+- When doing work from a plan: update that plan’s checkboxes and Progress log in the same turn you finish a step.

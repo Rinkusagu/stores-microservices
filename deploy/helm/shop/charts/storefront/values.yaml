@@ -1,0 +1,29 @@
+fullnameOverride: storefront
+replicaCount: 2
+image:
+  repository: ghcr.io/example/storefront
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  port: 8080
+env:
+  OTEL_SERVICE_NAME: storefront
+  OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector.observability.svc.cluster.local:4317
+  CATALOG_URL: http://catalog:8080
+  ORDERS_URL: http://orders:8080
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+ingress:
+  enabled: true
+  className: nginx
+  host: shop.local
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 128Mi

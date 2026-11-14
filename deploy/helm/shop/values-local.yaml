@@ -1,0 +1,23 @@
+catalog:
+  image:
+    repository: resilient-commerce/catalog
+    tag: local
+    pullPolicy: Never
+
+storefront:
+  image:
+    repository: resilient-commerce/storefront
+    tag: local
+    pullPolicy: Never
+
+orders:
+  image:
+    repository: resilient-commerce/orders
+    tag: local
+    pullPolicy: Never
+
+worker:
+  image:
+    repository: resilient-commerce/worker
+    tag: local
+    pullPolicy: Never

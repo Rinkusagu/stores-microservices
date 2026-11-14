@@ -1,0 +1,23 @@
+fullnameOverride: catalog
+replicaCount: 2
+image:
+  repository: ghcr.io/example/catalog
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  port: 8080
+env:
+  OTEL_SERVICE_NAME: catalog
+  OTEL_EXPORTER_OTLP_ENDPOINT: otel-collector.observability.svc.cluster.local:4317
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 128Mi
