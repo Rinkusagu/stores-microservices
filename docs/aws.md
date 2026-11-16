@@ -1,8 +1,8 @@
 # Optional AWS infrastructure (Terraform)
 
-This portfolio project ships **Azure-first** application and Kubernetes manifests. The layout under `infra/terraform` is an **optional** path for running the same workloads on AWS when you want a second cloud story for demos or interviews.
+The default demo is **local kind** — no cloud account required. The layout under `infra/terraform` is an **optional** path for EKS when you want an AWS story for demos or interviews.
 
-**Azure deployment and architecture for this repo are documented elsewhere and are out of scope for this file.**
+**Azure is out of scope** for this project.
 
 ## Layout
 

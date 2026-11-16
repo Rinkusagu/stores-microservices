@@ -4,3 +4,19 @@ description: Umbrella chart for the Resilient Commerce shop
 type: application
 version: 0.1.0
 appVersion: "0.1.0"
+dependencies:
+  - name: catalog
+    version: 0.1.0
+    repository: "file://charts/catalog"
+  - name: storefront
+    version: 0.1.0
+    repository: "file://charts/storefront"
+  - name: orders
+    version: 0.1.0
+    repository: "file://charts/orders"
+  - name: worker
+    version: 0.1.0
+    repository: "file://charts/worker"
+  - name: redis
+    version: 0.1.0
+    repository: "file://charts/redis"

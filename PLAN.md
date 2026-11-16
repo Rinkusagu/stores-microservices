@@ -13,7 +13,10 @@ All plans and progress for this project live **in this directory only** (`d:\cod
 
 | Plan | Status | File |
 |------|--------|------|
-| Resilient Commerce Platform | in-progress | [plans/resilient-commerce-platform.md](plans/resilient-commerce-platform.md) |
+| Resilient Commerce Platform | done (scaffold) | [plans/resilient-commerce-platform.md](plans/resilient-commerce-platform.md) |
+| Local Docker Compose smoke stack | done | [plans/local-docker-compose.md](plans/local-docker-compose.md) |
+| Next.js storefront rewrite | done | [plans/nextjs-storefront.md](plans/nextjs-storefront.md) |
+| Shop app features (FE + BE) | planned | [plans/shop-app-features.md](plans/shop-app-features.md) |
 
 ## Conventions
 

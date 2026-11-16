@@ -1,0 +1,76 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/**"
+      - ".github/workflows/release.yml"
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # Skip the values-bump commit so we do not rebuild images in a loop.
+    if: ${{ !contains(github.event.head_commit.message, 'chore(release): bump image tags') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push images
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+          for svc in storefront catalog orders worker; do
+            IMAGE="ghcr.io/${OWNER}/resilient-commerce-${svc}:${SHA}"
+            docker build -t "${IMAGE}" "apps/${svc}"
+            docker push "${IMAGE}"
+          done
+
+      - name: Bump Helm image tags
+        env:
+          SHA: ${{ github.sha }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          export OWNER="$(echo "${OWNER}" | tr '[:upper:]' '[:lower:]')"
+          python <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          owner = os.environ["OWNER"]
+          sha = os.environ["SHA"]
+          path = Path("deploy/helm/shop/values.yaml")
+          text = path.read_text()
+          for svc in ("catalog", "storefront", "orders", "worker"):
+              repo = f"ghcr.io/{owner}/resilient-commerce-{svc}"
+              pattern = rf"({svc}:\n(?:  .*\n)*?  image:\n    repository: ).*\n(    tag: ).*"
+              text, n = re.subn(pattern, rf"\1{repo}\n\2{sha}", text, count=1)
+              if n != 1:
+                  raise SystemExit(f"failed to update image for {svc}")
+          path.write_text(text)
+          PY
+
+      - name: Commit values bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add deploy/helm/shop/values.yaml
+          if git diff --staged --quiet; then
+            echo "No values changes"
+            exit 0
+          fi
+          git commit -m "chore(release): bump image tags to ${{ github.sha }}"
+          git push
