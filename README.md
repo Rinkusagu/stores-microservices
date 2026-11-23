@@ -124,3 +124,4 @@ cd apps && pytest -q catalog/tests orders/tests worker/tests
 cd apps/storefront && npm ci && npm test && npm run build
 helm dependency update deploy/helm/shop && helm lint deploy/helm/shop
 ```
+# stores-microservices
