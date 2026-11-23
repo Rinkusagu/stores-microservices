@@ -1,6 +1,6 @@
 # Resilient Commerce
 
-A resume-ready monorepo: a small shop (Next.js storefront + Python services) on local Kubernetes, with self-healing, autoscaling, traces, GitOps, GitHub Actions, and optional AWS Terraform.
+A small shop (Next.js storefront + Python services) on local Kubernetes, with self-healing, autoscaling, traces, GitOps, GitHub Actions, and optional AWS Terraform.
 
 The shop is only large enough to deploy, break, and scale. **The DevOps platform is the project.**
 
