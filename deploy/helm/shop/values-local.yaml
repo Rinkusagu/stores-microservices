@@ -3,12 +3,18 @@ catalog:
     repository: resilient-commerce/catalog
     tag: local
     pullPolicy: Never
+  autoscaling:
+    minReplicas: 2
+    maxReplicas: 3
 
 storefront:
   image:
     repository: resilient-commerce/storefront
     tag: local
     pullPolicy: Never
+  autoscaling:
+    minReplicas: 2
+    maxReplicas: 3
 
 orders:
   image:

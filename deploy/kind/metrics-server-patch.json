@@ -1,0 +1,68 @@
+[
+  {
+    "op": "replace",
+    "path": "/spec/template/spec/containers/0/args",
+    "value": [
+      "--cert-dir=/tmp",
+      "--secure-port=4443",
+      "--kubelet-preferred-address-types=InternalIP",
+      "--kubelet-use-node-status-port",
+      "--metric-resolution=30s",
+      "--kubelet-insecure-tls",
+      "--kubelet-request-timeout=15s"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/spec/template/spec/hostNetwork",
+    "value": true
+  },
+  {
+    "op": "add",
+    "path": "/spec/template/spec/dnsPolicy",
+    "value": "ClusterFirstWithHostNet"
+  },
+  {
+    "op": "replace",
+    "path": "/spec/template/spec/containers/0/ports",
+    "value": [
+      {
+        "containerPort": 4443,
+        "name": "https",
+        "protocol": "TCP"
+      }
+    ]
+  },
+  {
+    "op": "replace",
+    "path": "/spec/template/spec/containers/0/readinessProbe",
+    "value": {
+      "httpGet": {
+        "path": "/readyz",
+        "port": "https",
+        "scheme": "HTTPS"
+      },
+      "initialDelaySeconds": 40,
+      "periodSeconds": 10,
+      "timeoutSeconds": 5,
+      "failureThreshold": 18,
+      "successThreshold": 1
+    }
+  },
+  {
+    "op": "replace",
+    "path": "/spec/template/spec/containers/0/livenessProbe",
+    "value": {
+      "httpGet": {
+        "path": "/livez",
+        "port": "https",
+        "scheme": "HTTPS"
+      },
+      "initialDelaySeconds": 60,
+      "periodSeconds": 20,
+      "timeoutSeconds": 5,
+      "failureThreshold": 5,
+      "successThreshold": 1
+    }
+  }
+]

@@ -6,10 +6,10 @@ from telemetry import init_tracing
 init_tracing("catalog")
 
 PRODUCTS = [
-    {"id": "sku-100", "name": "Trail Bottle", "price_cents": 1800},
-    {"id": "sku-200", "name": "Canvas Tote", "price_cents": 2400},
-    {"id": "sku-300", "name": "Wool Beanie", "price_cents": 3200},
-    {"id": "sku-400", "name": "Field Notebook", "price_cents": 1400},
+    {"id": "sku-100", "name": "Graph Notebook A5", "price_cents": 1800},
+    {"id": "sku-200", "name": "Mechanical Pencil Set", "price_cents": 2400},
+    {"id": "sku-300", "name": "Highlighter Pack (6)", "price_cents": 3200},
+    {"id": "sku-400", "name": "Desk Flashcards (200)", "price_cents": 1400},
 ]
 
 app = FastAPI(title="catalog")

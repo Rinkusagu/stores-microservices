@@ -14,6 +14,7 @@ need kind
 need kubectl
 need helm
 
+
 if [[ "$(uname -s)" != "Linux" ]]; then
   echo "bootstrap.sh targets Linux (kind + host port 80/443). On Windows use WSL2." >&2
 fi
@@ -42,10 +43,8 @@ kubectl -n ingress-nginx wait --for=condition=available deploy/ingress-nginx-con
 
 log "Installing metrics-server (HPA)"
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.7.2/components.yaml
-kubectl -n kube-system patch deploy metrics-server --type='json' -p='[
-  {"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"},
-  {"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-preferred-address-types=InternalIP"}
-]' || true
+kubectl -n kube-system patch deploy metrics-server --type='json' \
+  --patch-file "${ROOT}/deploy/kind/metrics-server-patch.json" || true
 kubectl -n kube-system rollout status deploy/metrics-server --timeout=180s || true
 
 log "Creating namespaces"
